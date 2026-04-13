@@ -6,25 +6,25 @@
     <title>Family Pairing News — Youth Safety & Parental Controls Landscape</title>
     <style>
         :root {
-            --bg: #0f1117;
-            --surface: #1a1d27;
-            --surface2: #232733;
-            --border: #2d3140;
-            --text: #e4e6ed;
-            --text-muted: #8b8fa3;
+            --bg: #f5f6fa;
+            --surface: #ffffff;
+            --surface2: #f0f1f5;
+            --border: #e2e4ea;
+            --text: #1a1d27;
+            --text-muted: #5f6377;
             --accent: #6c5ce7;
-            --accent-light: #a29bfe;
-            --green: #00b894;
-            --orange: #fdcb6e;
-            --red: #e17055;
-            --blue: #74b9ff;
+            --accent-light: #5a4bd1;
+            --green: #00a884;
+            --orange: #e5a800;
+            --red: #d94a33;
+            --blue: #2b7de9;
             --tiktok: #fe2c55;
             --meta: #0668E1;
-            --youtube: #FF0000;
-            --snap: #FFFC00;
-            --roblox: #e2231a;
+            --youtube: #d40000;
+            --snap: #c4a200;
+            --roblox: #c41e16;
             --discord: #5865F2;
-            --apple: #A2AAAD;
+            --apple: #6e7681;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -38,7 +38,7 @@
 
         /* Header */
         .header {
-            background: linear-gradient(135deg, #1a1d27 0%, #232733 100%);
+            background: linear-gradient(135deg, #ffffff 0%, #f0f1f5 100%);
             border-bottom: 1px solid var(--border);
             padding: 24px 32px;
             position: sticky;
@@ -363,10 +363,10 @@
             font-weight: 600;
         }
 
-        .status-active { background: rgba(0,184,148,0.15); color: var(--green); }
-        .status-pending { background: rgba(253,203,110,0.15); color: var(--orange); }
-        .status-decided { background: rgba(108,92,231,0.15); color: var(--accent-light); }
-        .status-effective { background: rgba(116,185,255,0.15); color: var(--blue); }
+        .status-active { background: rgba(0,168,132,0.1); color: var(--green); }
+        .status-pending { background: rgba(229,168,0,0.1); color: var(--orange); }
+        .status-decided { background: rgba(108,92,231,0.1); color: var(--accent-light); }
+        .status-effective { background: rgba(43,125,233,0.1); color: var(--blue); }
 
         /* Platform tags */
         .platform-tag {
@@ -439,7 +439,7 @@
 
         /* Highlight for search */
         mark {
-            background: rgba(108,92,231,0.3);
+            background: rgba(108,92,231,0.15);
             color: var(--text);
             padding: 1px 3px;
             border-radius: 2px;
@@ -475,8 +475,8 @@
 
         /* Weekly summary box */
         .weekly-summary {
-            background: linear-gradient(135deg, rgba(108,92,231,0.08) 0%, rgba(162,155,254,0.05) 100%);
-            border: 1px solid rgba(108,92,231,0.2);
+            background: linear-gradient(135deg, rgba(108,92,231,0.06) 0%, rgba(162,155,254,0.03) 100%);
+            border: 1px solid rgba(108,92,231,0.15);
             border-radius: 10px;
             padding: 20px;
             margin-bottom: 16px;
@@ -531,7 +531,6 @@
         @media print {
             .header { position: static; }
             .search-container, .nav-bar { display: none; }
-            body { background: white; color: black; }
             .week-section.collapsed .week-content { display: block; }
         }
     </style>
