@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Family Pairing News — Youth Safety & Parental Controls Landscape</title>
+    <style>
+        :root {
+            --bg: #0f1117;
+            --surface: #1a1d27;
+            --surface2: #232733;
+            --border: #2d3140;
+            --text: #e4e6ed;
+            --text-muted: #8b8fa3;
+            --accent: #6c5ce7;
+            --accent-light: #a29bfe;
+            --green: #00b894;
+            --orange: #fdcb6e;
+            --red: #e17055;
+            --blue: #74b9ff;
+            --tiktok: #fe2c55;
+            --meta: #0668E1;
+            --youtube: #FF0000;
+            --snap: #FFFC00;
+            --roblox: #e2231a;
+            --discord: #5865F2;
+            --apple: #A2AAAD;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #1a1d27 0%, #232733 100%);
+            border-bottom: 1px solid var(--border);
+            padding: 24px 32px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .header h1 {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .header h1 span {
+            color: var(--accent-light);
+        }
+
+        .header-meta {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .version-badge {
+            background: var(--accent);
+            color: white;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        /* Search */
+        .search-container {
+            margin-top: 16px;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 16px 12px 44px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .search-input:focus {
+            border-color: var(--accent);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 16px;
+        }
+
+        .search-stats {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 12px;
+        }
+
+        /* Navigation */
+        .nav-bar {
+            display: flex;
+            gap: 6px;
+            padding: 12px 32px;
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            overflow-x: auto;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            padding: 6px 14px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text-muted);
+            font-size: 12px;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+
+        .nav-btn:hover, .nav-btn.active {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        /* Main layout */
+        .main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px 32px;
+        }
+
+        /* Weekly section */
+        .week-section {
+            margin-bottom: 32px;
+        }
+
+        .week-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 20px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px 10px 0 0;
+            cursor: pointer;
+            user-select: none;
+            transition: background 0.2s;
+        }
+
+        .week-header:hover {
+            background: var(--surface2);
+        }
+
+        .week-header h2 {
+            font-size: 16px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .week-header h2 .week-label {
+            color: var(--accent-light);
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .week-toggle {
+            font-size: 18px;
+            color: var(--text-muted);
+            transition: transform 0.3s;
+        }
+
+        .week-section.collapsed .week-toggle {
+            transform: rotate(-90deg);
+        }
+
+        .week-section.collapsed .week-content {
+            display: none;
+        }
+
+        .week-content {
+            border: 1px solid var(--border);
+            border-top: none;
+            border-radius: 0 0 10px 10px;
+            overflow: hidden;
+        }
+
+        /* Daily brief card */
+        .daily-brief {
+            padding: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .daily-brief:last-child {
+            border-bottom: none;
+        }
+
+        .brief-date {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .brief-date h3 {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--accent-light);
+        }
+
+        .brief-date .day-badge {
+            font-size: 11px;
+            color: var(--text-muted);
+            background: var(--surface2);
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        /* Section within a daily brief */
+        .brief-section {
+            margin-bottom: 18px;
+        }
+
+        .brief-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .section-title {
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid var(--border);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-title .section-icon {
+            font-size: 14px;
+        }
+
+        .section-collapsed .section-body {
+            display: none;
+        }
+
+        /* Headlines */
+        .headline {
+            background: var(--surface2);
+            border-radius: 8px;
+            padding: 14px 16px;
+            margin-bottom: 8px;
+            border-left: 3px solid var(--accent);
+        }
+
+        .headline.tiktok-relevant {
+            border-left-color: var(--tiktok);
+        }
+
+        .headline h4 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .headline p {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .headline .source-link {
+            font-size: 12px;
+            color: var(--blue);
+            text-decoration: none;
+            margin-top: 6px;
+            display: inline-block;
+        }
+
+        .headline .source-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Tables */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        .data-table th {
+            text-align: left;
+            padding: 8px 12px;
+            background: var(--surface2);
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .data-table td {
+            padding: 8px 12px;
+            border-bottom: 1px solid var(--border);
+            vertical-align: top;
+        }
+
+        .data-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .data-table a {
+            color: var(--blue);
+            text-decoration: none;
+        }
+
+        .data-table a:hover {
+            text-decoration: underline;
+        }
+
+        /* Status badges */
+        .status {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .status-active { background: rgba(0,184,148,0.15); color: var(--green); }
+        .status-pending { background: rgba(253,203,110,0.15); color: var(--orange); }
+        .status-decided { background: rgba(108,92,231,0.15); color: var(--accent-light); }
+        .status-effective { background: rgba(116,185,255,0.15); color: var(--blue); }
+
+        /* Platform tags */
+        .platform-tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-right: 4px;
+        }
+
+        .tag-tiktok { background: rgba(254,44,85,0.15); color: var(--tiktok); }
+        .tag-meta { background: rgba(6,104,225,0.15); color: var(--meta); }
+        .tag-youtube { background: rgba(255,0,0,0.12); color: #ff4444; }
+        .tag-snap { background: rgba(255,252,0,0.12); color: #ccca00; }
+        .tag-roblox { background: rgba(226,35,26,0.12); color: #ff5555; }
+        .tag-discord { background: rgba(88,101,242,0.15); color: var(--discord); }
+        .tag-apple { background: rgba(162,170,173,0.15); color: var(--apple); }
+
+        /* Competitor cards */
+        .competitor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 10px;
+        }
+
+        .competitor-card {
+            background: var(--surface2);
+            border-radius: 8px;
+            padding: 14px 16px;
+            border-left: 3px solid var(--border);
+        }
+
+        .competitor-card h4 {
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .competitor-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .competitor-card li {
+            font-size: 12px;
+            color: var(--text-muted);
+            padding: 3px 0;
+            padding-left: 14px;
+            position: relative;
+        }
+
+        .competitor-card li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--accent-light);
+        }
+
+        /* Nothing new badge */
+        .nothing-new {
+            color: var(--text-muted);
+            font-style: italic;
+            font-size: 13px;
+            padding: 8px 0;
+        }
+
+        /* Highlight for search */
+        mark {
+            background: rgba(108,92,231,0.3);
+            color: var(--text);
+            padding: 1px 3px;
+            border-radius: 2px;
+        }
+
+        /* Summary bar */
+        .summary-bar {
+            display: flex;
+            gap: 16px;
+            padding: 16px 32px;
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            overflow-x: auto;
+        }
+
+        .summary-stat {
+            text-align: center;
+            min-width: 100px;
+        }
+
+        .summary-stat .stat-number {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--accent-light);
+        }
+
+        .summary-stat .stat-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Weekly summary box */
+        .weekly-summary {
+            background: linear-gradient(135deg, rgba(108,92,231,0.08) 0%, rgba(162,155,254,0.05) 100%);
+            border: 1px solid rgba(108,92,231,0.2);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 16px;
+        }
+
+        .weekly-summary h3 {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--accent-light);
+        }
+
+        .weekly-summary ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .weekly-summary li {
+            font-size: 13px;
+            padding: 4px 0;
+            padding-left: 18px;
+            position: relative;
+            color: var(--text-muted);
+        }
+
+        .weekly-summary li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--accent-light);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 32px;
+            color: var(--text-muted);
+            font-size: 12px;
+            border-top: 1px solid var(--border);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header { padding: 16px; }
+            .main { padding: 16px; }
+            .nav-bar { padding: 8px 16px; }
+            .summary-bar { padding: 12px 16px; }
+            .competitor-grid { grid-template-columns: 1fr; }
+        }
+
+        /* Print styles */
+        @media print {
+            .header { position: static; }
+            .search-container, .nav-bar { display: none; }
+            body { background: white; color: black; }
+            .week-section.collapsed .week-content { display: block; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div class="header-top">
+        <h1>Family Pairing News <span>— Youth Safety & Parental Controls</span></h1>
+        <div class="header-meta">
+            <span class="version-badge">v1.0</span>
+            <span>Last updated: 2026-04-13</span>
+        </div>
+    </div>
+    <div class="search-container">
+        <span class="search-icon">&#128269;</span>
+        <input type="text" class="search-input" id="searchInput" placeholder="Search briefs... (e.g., 'COPPA', 'TikTok', 'age verification', 'Meta verdict')">
+        <span class="search-stats" id="searchStats"></span>
+    </div>
+</div>
+
+<div class="nav-bar" id="navBar">
+    <button class="nav-btn active" data-filter="all">All Sections</button>
+    <button class="nav-btn" data-filter="headlines">Headlines</button>
+    <button class="nav-btn" data-filter="legislation">Legislation</button>
+    <button class="nav-btn" data-filter="competitors">Competitors</button>
+    <button class="nav-btn" data-filter="industry">Industry</button>
+    <button class="nav-btn" data-filter="legal">Legal</button>
+    <button class="nav-btn" data-filter="media">Media & Opinion</button>
+</div>
+
+<div class="summary-bar">
+    <div class="summary-stat">
+        <div class="stat-number" id="totalBriefs">1</div>
+        <div class="stat-label">Total Briefs</div>
+    </div>
+    <div class="summary-stat">
+        <div class="stat-number" id="totalWeeks">1</div>
+        <div class="stat-label">Weeks Tracked</div>
+    </div>
+    <div class="summary-stat">
+        <div class="stat-number">9</div>
+        <div class="stat-label">Active Legislation</div>
+    </div>
+    <div class="summary-stat">
+        <div class="stat-number">8</div>
+        <div class="stat-label">Platforms Tracked</div>
+    </div>
+    <div class="summary-stat">
+        <div class="stat-number">10</div>
+        <div class="stat-label">Legal Actions</div>
+    </div>
+</div>
+
+<div class="main">
+
+    <!-- ============================================================ -->
+    <!-- WEEK: 2026-W16 (Apr 7 – Apr 13) -->
+    <!-- ============================================================ -->
+    <div class="week-section" data-week="2026-W16">
+        <div class="week-header" onclick="toggleWeek(this)">
+            <h2>
+                Week of Apr 7 – Apr 13, 2026
+                <span class="week-label">W16</span>
+            </h2>
+            <span class="week-toggle">&#9660;</span>
+        </div>
+        <div class="week-content">
+
+            <!-- Weekly Summary -->
+            <div style="padding: 20px;">
+                <div class="weekly-summary">
+                    <h3>Weekly Summary — W16</h3>
+                    <ul>
+                        <li>Instagram expanded Teen Accounts with 13+ content ratings globally (Apr 9)</li>
+                        <li>COPPA amended rule compliance deadline approaching: April 22, 2026</li>
+                        <li>Congressional efforts on KOSA stalling as House strips duty of care provision</li>
+                        <li>Australia's eSafety Commissioner investigating 5 major platforms for under-16 ban enforcement gaps</li>
+                        <li>Meta $375M verdict from New Mexico trial reverberating across industry (Mar 24)</li>
+                        <li>South Korea launching AI-based child exploitation detection system in April</li>
+                        <li>Ofcom new CSEA reporting obligation to National Crime Agency effective this month</li>
+                        <li>Social Media Addiction MDL now at 2,465 pending cases</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- DAILY BRIEF: 2026-04-13 -->
+            <div class="daily-brief" data-date="2026-04-13">
+                <div class="brief-date">
+                    <h3>Sunday, April 13, 2026</h3>
+                    <span class="day-badge">2026-04-13</span>
+                </div>
+
+                <!-- TOP HEADLINES -->
+                <div class="brief-section" data-category="headlines">
+                    <div class="section-title" onclick="toggleSection(this)">
+                        <span class="section-icon">&#128240;</span>
+                        Top Headlines
+                    </div>
+                    <div class="section-body">
+                        <div class="headline tiktok-relevant">
+                            <h4>&#9889; Instagram Expands Teen Accounts with 13+ Content Ratings Globally</h4>
+                            <p>Meta announced international expansion of age-appropriate 13+ content rating and "Limited Content" setting. Teens under 18 auto-enrolled; opt-out requires parental permission. Content filtering mirrors movie-style PG-13 standards across feeds, search, and recommendations.</p>
+                            <a class="source-link" href="https://about.fb.com/news/2026/04/instagram-expands-teen-accounts-inspired-by-13-content-ratings/" target="_blank">Meta Newsroom ↗</a>
+                            <a class="source-link" href="https://techcrunch.com/2026/04/09/instagram-expands-its-movie-inspired-content-restriction-for-teens-internationally/" target="_blank" style="margin-left:8px;">TechCrunch ↗</a>
+                        </div>
+                        <div class="headline">
+                            <h4>COPPA Amended Rule Compliance Deadline: April 22</h4>
+                            <p>Companies have until April 22, 2026 to comply with the FTC's amended COPPA Rule — expanded definition of personal information (now includes biometrics), enhanced notice requirements, mandatory written infosec programs, stricter data retention limits.</p>
+                            <a class="source-link" href="https://bbbprograms.org/media/insights/blog/coppa-amended" target="_blank">BBB National Programs ↗</a>
+                        </div>
+                        <div class="headline">
+                            <h4>Congressional Efforts on Kids Safety Stall</h4>
+                            <p>KOSA's "duty of care" provision gutted in House version (KIDS Act). Rep. Gottheimer introduced bipartisan "Parents Decide Act" (Apr 2) requiring OS-level age verification. Tech industry lobbying continues to slow progress.</p>
+                            <a class="source-link" href="https://spectrumlocalnews.com/us/snplus/news/2026/04/10/congress-stalls-social-media-legislation" target="_blank">Spectrum News ↗</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LEGISLATION TRACKER -->
+                <div class="brief-section" data-category="legislation">
+                    <div class="section-title" onclick="toggleSection(this)">
+                        <span class="section-icon">&#9878;</span>
+                        Legislation Tracker
+                    </div>
+                    <div class="section-body">
+                        <h4 style="font-size:13px; color:var(--text-muted); margin: 8px 0 6px;">United States — Federal</h4>
+                        <table class="data-table">
+                            <thead><tr><th>Bill / Action</th><th>Status</th><th>Notes</th></tr></thead>
+                            <tbody>
+                                <tr><td>KOSA / KIDS Act (H.R.7757)</td><td><span class="status status-active">Active</span></td><td>Advanced to full House; duty of care stripped</td></tr>
+                                <tr><td>COPPA Amended Rule</td><td><span class="status status-pending">Deadline Apr 22</span></td><td>Biometrics added to personal info definition</td></tr>
+                                <tr><td>Parents Decide Act</td><td><span class="status status-active">Introduced Apr 2</span></td><td>OS-level age verification by Apple/Google</td></tr>
+                                <tr><td>FTC COPPA Policy Statement</td><td><span class="status status-decided">Issued Feb 25</span></td><td>Safe harbor for age verification data</td></tr>
+                                <tr><td>Kids Off Social Media Act (S.278)</td><td><span class="status status-pending">Pending</span></td><td>Ban social media for under-13s</td></tr>
+                            </tbody>
+                        </table>
+
+                        <h4 style="font-size:13px; color:var(--text-muted); margin: 14px 0 6px;">United States — State</h4>
+                        <table class="data-table">
+                            <thead><tr><th>State</th><th>Action</th><th>Status</th></tr></thead>
+                            <tbody>
+                                <tr><td>New York</td><td>Stop Online Predators Act — age assurance, default-off chat</td><td><span class="status status-active">Active</span></td></tr>
+                                <tr><td>California</td><td>Chatbot safety law for children</td><td><span class="status status-effective">Effective 2026</span></td></tr>
+                                <tr><td>Texas</td><td>App store age verification mandate</td><td><span class="status status-effective">Effective Jan 1</span></td></tr>
+                                <tr><td>Kentucky</td><td>HB 227 — age verification + no addictive algos for minors</td><td><span class="status status-active">Active</span></td></tr>
+                            </tbody>
+                        </table>
+
+                        <h4 style="font-size:13px; color:var(--text-muted); margin: 14px 0 6px;">International</h4>
+                        <table class="data-table">
+                            <thead><tr><th>Jurisdiction</th><th>Action</th><th>Status</th></tr></thead>
+                            <tbody>
+                                <tr><td>&#127468;&#127463; UK</td><td>Ofcom: 90+ investigations, 6 fines; Kick fined £800K; CSEA reporting to NCA from Apr 2026</td><td><span class="status status-active">Enforcing</span></td></tr>
+                                <tr><td>&#127466;&#127482; EU</td><td>DSA Art 28 enforcement; adult platforms charged; RFI to Snapchat/Apple</td><td><span class="status status-active">Investigating</span></td></tr>
+                                <tr><td>&#127462;&#127482; Australia</td><td>Under-16 ban enforcement gaps; 5 platforms under investigation</td><td><span class="status status-active">Investigating</span></td></tr>
+                                <tr><td>&#127472;&#127479; South Korea</td><td>AI child exploitation detection (Apr); Network Act amendment (Jul 2026)</td><td><span class="status status-active">Deploying</span></td></tr>
+                                <tr><td>&#127470;&#127475; India</td><td>Digital Personal Data Protection Rules — parental consent</td><td><span class="status status-pending">Draft</span></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- COMPETITOR WATCH -->
+                <div class="brief-section" data-category="competitors">
+                    <div class="section-title" onclick="toggleSection(this)">
+                        <span class="section-icon">&#128065;</span>
+                        Competitor Watch
+                    </div>
+                    <div class="section-body">
+                        <div class="competitor-grid">
+                            <div class="competitor-card" style="border-left-color: var(--tiktok);">
+                                <h4><span class="platform-tag tag-tiktok">TikTok</span> &#9889; Family Pairing</h4>
+                                <ul>
+                                    <li>15+ adjustable settings; parents see followers/following, blocked accounts</li>
+                                    <li>Custom screen time by day of week; STEM feed option</li>
+                                    <li>New ToS (Jan 22) under US ownership — now collects precise location data</li>
+                                    <li>Teen defaults: private accounts, 60-min daily limit, restricted DMs</li>
+                                    <li>Livestream: min age 16, gifts at 18, 1K follower min</li>
+                                    <li>Privacy policy backlash: thousands threatening to leave</li>
+                                </ul>
+                            </div>
+                            <div class="competitor-card" style="border-left-color: var(--meta);">
+                                <h4><span class="platform-tag tag-meta">Meta/Instagram</span> &#9889; Teen Accounts</h4>
+                                <ul>
+                                    <li>13+ content rating expanded globally (Apr 9)</li>
+                                    <li>Auto-enrollment; no teen opt-out without parent permission</li>
+                                    <li>"Limited Content" mode for stricter controls</li>
+                                    <li>AI detects teens using adult birthdays</li>
+                                    <li>$375M verdict in New Mexico — appeal pending</li>
+                                </ul>
+                            </div>
+                            <div class="competitor-card" style="border-left-color: var(--youtube);">
+                                <h4><span class="platform-tag tag-youtube">YouTube/Google</span></h4>
+                                <ul>
+                                    <li>Family Link supervised tiers: Explore / Explore More / Most of YouTube</li>
+                                    <li>Parents can set Shorts daily feed to zero (Mar 2026)</li>
+                                    <li>Supervision ends at 13 with graduation option</li>
+                                    <li>Under investigation by Australia eSafety</li>
+                                </ul>
+                            </div>
+                            <div class="competitor-card" style="border-left-color: var(--snap);">
+                                <h4><span class="platform-tag tag-snap">Snapchat</span></h4>
+                                <ul>
+                                    <li>Family Center active with parental controls</li>
+                                    <li>Under investigation: Australia under-16 ban compliance</li>
+                                    <li>EU Commission sent RFI on minor safeguards</li>
+                                </ul>
+                            </div>
+                            <div class="competitor-card" style="border-left-color: var(--discord);">
+                                <h4><span class="platform-tag tag-discord">Discord</span></h4>
+                                <ul>
+                                    <li>Teen-by-default restricted mode (Mar 2026)</li>
+                                    <li>Family Center: purchase monitoring, interaction insights</li>
+                                    <li>Guardian-locked DM settings and content filters</li>
+                                    <li>Ongoing teen harm lawsuits</li>
+                                </ul>
+                            </div>
+                            <div class="competitor-card" style="border-left-color: var(--roblox);">
+                                <h4><span class="platform-tag tag-roblox">Roblox</span></h4>
+                                <ul>
+                                    <li>Mandatory ID/facial scan for 18+ (Jan 1, 2026)</li>
+                                    <li>Chat disabled for under-9 by default</li>
+                                    <li>No DMs outside games for under-13</li>
+                                    <li>Iowa AG lawsuit; 146 cases in federal MDL</li>
+                                </ul>
+                            </div>
+                            <div class="competitor-card" style="border-left-color: var(--apple);">
+                                <h4><span class="platform-tag tag-apple">Apple & Google</span> OS/Store</h4>
+                                <ul>
+                                    <li>Apple: 13+/16+/18+ ratings; Declared Age Range API live</li>
+                                    <li>Google: Play Age Signals API; Family Link</li>
+                                    <li>Texas mandate: age verification for app downloads</li>
+                                </ul>
+                            </div>
+                            <div class="competitor-card">
+                                <h4>X / BeReal / Pinterest</h4>
+                                <ul>
+                                    <li>X: No supervised parental controls, no screen time limits</li>
+                                    <li>BeReal: No parental controls available</li>
+                                    <li>Pinterest: Parental passcode for account settings</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- INDUSTRY SIGNALS -->
+                <div class="brief-section" data-category="industry">
+                    <div class="section-title" onclick="toggleSection(this)">
+                        <span class="section-icon">&#128161;</span>
+                        Industry Signals
+                    </div>
+                    <div class="section-body">
+                        <table class="data-table">
+                            <thead><tr><th>Organization</th><th>Update</th></tr></thead>
+                            <tbody>
+                                <tr><td>Common Sense Media + OpenAI</td><td>Backing "Parents & Kids Safe AI Act" (Jan 2026)</td></tr>
+                                <tr><td>5Rights Foundation</td><td>Contributed to ISO/IEC 27566-1 privacy-preserving age assurance standard</td></tr>
+                                <tr><td>IEEE</td><td>Published IEEE 2089.1 standard for age verification + certification program</td></tr>
+                                <tr><td>W3C</td><td>Verified Credentials model adopted by Apple/Google for wallet-based age verification</td></tr>
+                                <tr><td>ISO</td><td>ISO/IEC 27566-1:2025 — first global age assurance standard</td></tr>
+                                <tr><td>Ofcom + eSafety + EU Commission</td><td>Trilateral cooperation on age assurance best practices</td></tr>
+                                <tr><td>FTC</td><td>Children's online safety named priority in new 5-year strategic plan</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- LEGAL ACTIONS -->
+                <div class="brief-section" data-category="legal">
+                    <div class="section-title" onclick="toggleSection(this)">
+                        <span class="section-icon">&#9878;</span>
+                        Legal Actions
+                    </div>
+                    <div class="section-body">
+                        <table class="data-table">
+                            <thead><tr><th>Case</th><th>Status</th><th>Jurisdiction</th></tr></thead>
+                            <tbody>
+                                <tr><td>New Mexico v. Meta — $375M verdict</td><td><span class="status status-decided">Verdict Mar 24; appealing</span></td><td>New Mexico</td></tr>
+                                <tr><td>California — Meta & YouTube negligence (algorithms)</td><td><span class="status status-decided">Verdict Mar 2026</span></td><td>California</td></tr>
+                                <tr><td>Social Media Addiction MDL</td><td><span class="status status-active">2,465 pending cases</span></td><td>Federal</td></tr>
+                                <tr><td>Iowa v. Roblox — deceptive marketing</td><td><span class="status status-active">Filed Jan 2026</span></td><td>Iowa</td></tr>
+                                <tr><td>Roblox MDL — 146 lawsuits</td><td><span class="status status-active">Active</span></td><td>Federal</td></tr>
+                                <tr><td>Discord — grooming/teen harm</td><td><span class="status status-active">Active</span></td><td>Multiple</td></tr>
+                                <tr><td>13 states v. TikTok</td><td><span class="status status-active">Filed Oct 2024</span></td><td>Multi-state</td></tr>
+                                <tr><td>Texas AG v. TikTok — minors' data</td><td><span class="status status-active">Ongoing</span></td><td>Texas</td></tr>
+                                <tr><td>EU v. adult platforms (DSA)</td><td><span class="status status-active">Investigating</span></td><td>EU</td></tr>
+                                <tr><td>Ofcom v. Kick — £800K fine</td><td><span class="status status-decided">Decided Feb 2026</span></td><td>UK</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- MEDIA & OPINION -->
+                <div class="brief-section" data-category="media">
+                    <div class="section-title" onclick="toggleSection(this)">
+                        <span class="section-icon">&#128220;</span>
+                        Media & Opinion
+                    </div>
+                    <div class="section-body">
+                        <div class="headline">
+                            <h4>Congress Stalling on Kids Safety</h4>
+                            <p>Spectrum News reported (Apr 10) that child safety legislation is hitting GOP roadblocks despite bipartisan Senate support. Tech industry lobbying cited as key obstacle.</p>
+                        </div>
+                        <div class="headline">
+                            <h4>AI Chatbot Concerns Expanding</h4>
+                            <p>Congressional hearings now expanding focus to AI chatbot risks for teens, citing cases of chatbots encouraging self-harm in vulnerable youth.</p>
+                        </div>
+                        <div class="headline">
+                            <h4>TikTok Privacy Backlash</h4>
+                            <p>Thousands of users threatening to leave over new ownership's expanded data collection policies, including precise location tracking.</p>
+                        </div>
+                        <div class="headline">
+                            <h4>Australia Enforcement Gaps</h4>
+                            <p>Euronews reported (Mar 31) that Australian Communications Minister warned platforms of "major gaps" in under-16 ban enforcement.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- END DAILY BRIEF 2026-04-13 -->
+
+        </div>
+    </div>
+
+</div>
+
+<div class="footer">
+    Family Pairing News — Youth Safety & Parental Controls Landscape Brief<br>
+    Internal use only &bull; Updated daily &bull; v1.0
+</div>
+
+<script>
+    // Toggle week sections
+    function toggleWeek(header) {
+        const section = header.closest('.week-section');
+        section.classList.toggle('collapsed');
+    }
+
+    // Toggle brief sections
+    function toggleSection(title) {
+        const section = title.closest('.brief-section');
+        section.classList.toggle('section-collapsed');
+    }
+
+    // Search functionality
+    const searchInput = document.getElementById('searchInput');
+    const searchStats = document.getElementById('searchStats');
+
+    searchInput.addEventListener('input', function() {
+        const query = this.value.toLowerCase().trim();
+        const briefs = document.querySelectorAll('.daily-brief');
+        let matchCount = 0;
+        let totalBriefs = briefs.length;
+
+        // Clear previous highlights
+        document.querySelectorAll('mark').forEach(m => {
+            m.replaceWith(m.textContent);
+        });
+
+        if (!query) {
+            // Show all
+            briefs.forEach(b => b.style.display = '');
+            document.querySelectorAll('.brief-section').forEach(s => s.style.display = '');
+            document.querySelectorAll('.week-section').forEach(w => {
+                w.classList.remove('collapsed');
+                w.style.display = '';
+            });
+            searchStats.textContent = '';
+            return;
+        }
+
+        briefs.forEach(brief => {
+            const text = brief.textContent.toLowerCase();
+            if (text.includes(query)) {
+                brief.style.display = '';
+                matchCount++;
+                // Expand parent week
+                const week = brief.closest('.week-section');
+                if (week) {
+                    week.classList.remove('collapsed');
+                    week.style.display = '';
+                }
+
+                // Highlight matches in visible text
+                highlightMatches(brief, query);
+            } else {
+                brief.style.display = 'none';
+            }
+        });
+
+        searchStats.textContent = matchCount + ' of ' + totalBriefs + ' briefs';
+    });
+
+    function highlightMatches(container, query) {
+        const walker = document.createTreeWalker(container, NodeFilter.SHOW_TEXT);
+        const textNodes = [];
+        while (walker.nextNode()) textNodes.push(walker.currentNode);
+
+        textNodes.forEach(node => {
+            const text = node.textContent;
+            const lowerText = text.toLowerCase();
+            const idx = lowerText.indexOf(query);
+            if (idx === -1) return;
+            if (node.parentElement.tagName === 'SCRIPT' || node.parentElement.tagName === 'STYLE') return;
+
+            const before = text.slice(0, idx);
+            const match = text.slice(idx, idx + query.length);
+            const after = text.slice(idx + query.length);
+
+            const span = document.createElement('span');
+            span.innerHTML = escapeHtml(before) + '<mark>' + escapeHtml(match) + '</mark>' + escapeHtml(after);
+
+            node.parentNode.replaceChild(span, node);
+        });
+    }
+
+    function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+
+    // Section filter nav
+    document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+
+            const filter = this.dataset.filter;
+            document.querySelectorAll('.brief-section').forEach(section => {
+                if (filter === 'all' || section.dataset.category === filter) {
+                    section.style.display = '';
+                } else {
+                    section.style.display = 'none';
+                }
+            });
+
+            // Also show/hide weekly summaries
+            document.querySelectorAll('.weekly-summary').forEach(ws => {
+                ws.style.display = filter === 'all' ? '' : 'none';
+            });
+        });
+    });
+
+    // Keyboard shortcut: Cmd/Ctrl + K to focus search
+    document.addEventListener('keydown', function(e) {
+        if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+            e.preventDefault();
+            searchInput.focus();
+        }
+        if (e.key === 'Escape') {
+            searchInput.value = '';
+            searchInput.dispatchEvent(new Event('input'));
+            searchInput.blur();
+        }
+    });
+</script>
+
+</body>
+</html>
