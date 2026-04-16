@@ -23,18 +23,18 @@ Search the web for the latest developments in these categories:
 - **Industry signals** (standards bodies, advocacy orgs, policy statements)
 - **Media & opinion** (news coverage, op-eds, public sentiment)
 
-Focus on what changed since the last brief. Use real, verifiable sources with links.
+Focus on what changed since the last brief. Use real, verifiable sources with links. **Save the URLs you find — you will need them for every item in every section.**
 
 ### Step 2: Create the markdown brief
 
 Save a new file in `briefs/` named `youth-safety-brief-YYYY-MM-DD.md` following the exact structure of existing briefs. Include:
 
 1. **Top 3 Headlines** — the most significant developments, with source links
-2. **Legislation Tracker** — tables for US Federal, US State, UK, EU, Australia, and other jurisdictions
-3. **Competitor Watch** — updates per platform (TikTok, Meta/Instagram, YouTube, Snapchat, Discord, Roblox, Apple/Google, X, BeReal, Pinterest)
-4. **Industry Signals** — standards bodies, advocacy orgs, research
-5. **Legal Actions** — active cases, verdicts, fines
-6. **Media & Opinion** — notable coverage and public sentiment
+2. **Legislation Tracker** — tables for US Federal, US State, UK, EU, Australia, and other jurisdictions. **Link each bill/action name to its official page or best news source.**
+3. **Competitor Watch** — updates per platform. **Link platform feature names to official pages, and link news items to reporting sources.**
+4. **Industry Signals** — standards bodies, advocacy orgs, research. **Link each org name and each standard/initiative to its official page.**
+5. **Legal Actions** — active cases, verdicts, fines. **Link each case name to court records or news coverage.**
+6. **Media & Opinion** — notable coverage and public sentiment. **Every item must have a source link.**
 
 If there is nothing new for a section or platform, say "No new developments" — do not omit the section.
 
@@ -114,12 +114,12 @@ Insert a new `daily-brief` block into the correct week section in `index.html`. 
             Legislation Tracker
         </div>
         <div class="section-body">
-            <!-- Tables for each jurisdiction -->
+            <!-- Tables for each jurisdiction — EVERY bill/action name MUST be a link -->
             <h4 style="font-size:13px; color:var(--text-muted); margin: 8px 0 6px;">United States — Federal</h4>
             <table class="data-table">
                 <thead><tr><th>Bill / Action</th><th>Status</th><th>Notes</th></tr></thead>
                 <tbody>
-                    <tr><td>Bill name</td><td><span class="status status-active">Active</span></td><td>Notes</td></tr>
+                    <tr><td><a href="https://congress.gov/bill/..." target="_blank">Bill name</a></td><td><span class="status status-active">Active</span></td><td>Notes</td></tr>
                 </tbody>
             </table>
             <!-- Add more jurisdiction tables as needed -->
@@ -134,10 +134,12 @@ Insert a new `daily-brief` block into the correct week section in `index.html`. 
         </div>
         <div class="section-body">
             <div class="competitor-grid">
+                <!-- EVERY factual claim MUST link to its source (official page, news article, etc.) -->
                 <div class="competitor-card" style="border-left-color: var(--tiktok);">
                     <h4><span class="platform-tag tag-tiktok">TikTok</span> Family Pairing</h4>
                     <ul>
-                        <li>Update or "No new developments"</li>
+                        <li><a href="https://www.tiktok.com/safety/..." target="_blank">Feature name</a>: description</li>
+                        <li><a href="https://techcrunch.com/..." target="_blank">News item</a>: description</li>
                     </ul>
                 </div>
                 <!-- More competitor cards... -->
@@ -153,9 +155,10 @@ Insert a new `daily-brief` block into the correct week section in `index.html`. 
         </div>
         <div class="section-body">
             <table class="data-table">
+                <!-- EVERY org name and initiative MUST be a link -->
                 <thead><tr><th>Organization</th><th>Update</th></tr></thead>
                 <tbody>
-                    <tr><td>Org name</td><td>Update text</td></tr>
+                    <tr><td><a href="https://org-website.com" target="_blank">Org name</a></td><td>Backing <a href="https://..." target="_blank">"Initiative Name"</a> (date)</td></tr>
                 </tbody>
             </table>
         </div>
@@ -169,9 +172,10 @@ Insert a new `daily-brief` block into the correct week section in `index.html`. 
         </div>
         <div class="section-body">
             <table class="data-table">
+                <!-- EVERY case name MUST link to court records or news coverage -->
                 <thead><tr><th>Case</th><th>Status</th><th>Jurisdiction</th></tr></thead>
                 <tbody>
-                    <tr><td>Case name</td><td><span class="status status-active">Active</span></td><td>Jurisdiction</td></tr>
+                    <tr><td><a href="https://reuters.com/legal/..." target="_blank">Case name</a></td><td><span class="status status-active">Active</span></td><td>Jurisdiction</td></tr>
                 </tbody>
             </table>
         </div>
@@ -184,9 +188,11 @@ Insert a new `daily-brief` block into the correct week section in `index.html`. 
             Media & Opinion
         </div>
         <div class="section-body">
+            <!-- EVERY media item MUST have a source link -->
             <div class="headline">
                 <h4>Article Title</h4>
                 <p>Summary of the coverage or opinion piece.</p>
+                <a class="source-link" href="https://news-outlet.com/..." target="_blank">Source Name ↗</a>
             </div>
         </div>
     </div>
@@ -234,7 +240,13 @@ If adding to an existing week, update the `weekly-summary` `<ul>` to include the
 
 1. **Newest first** — newest weeks at the top, newest days at the top within each week
 2. **Real sources only** — every headline must link to a verifiable source
-3. **Keep it factual** — no speculation or editorializing in the brief itself (opinion section is for reporting on others' opinions)
-4. **Carry forward context** — reference prior developments when relevant (e.g., "following the Mar 24 verdict...")
-5. **Single file** — all HTML/CSS/JS stays in `index.html`. Do not split into separate files.
-6. **Commit after each update** — commit with message format: `Add daily brief: YYYY-MM-DD`
+3. **Link everything** — every factual claim must link out to relevant detail. This applies to ALL sections, not just headlines:
+   - **Legislation**: bill/action names link to official legislative pages (congress.gov, state legislature sites, regulator pages)
+   - **Competitor Watch**: platform feature names link to official safety/parent pages; news items link to reporting sources
+   - **Industry Signals**: org names link to org homepages; standards/initiatives link to their official pages
+   - **Legal Actions**: case names link to court records, dockets, or news coverage
+   - **Media & Opinion**: every item must include a `<a class="source-link">` to the article being referenced
+4. **Keep it factual** — no speculation or editorializing in the brief itself (opinion section is for reporting on others' opinions)
+5. **Carry forward context** — reference prior developments when relevant (e.g., "following the Mar 24 verdict...")
+6. **Single file** — all HTML/CSS/JS stays in `index.html`. Do not split into separate files.
+7. **Commit after each update** — commit with message format: `Add daily brief: YYYY-MM-DD`
